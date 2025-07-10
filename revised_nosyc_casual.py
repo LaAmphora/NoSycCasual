@@ -11,6 +11,16 @@ import hmac
 
 st.title("LLM for Self-Diagnosis 🟩")
 
+# Function to edit the html and add a copy to clipboard function
+def read_html():
+    with open("index.html") as f:
+        return f.read().replace(
+            "copy_text", json.dumps(st.session_state.copied) # JSON dumps converts to safe text
+        )
+
+if "copied" not in st.session_state:
+    st.session_state.copied = []
+
 # https://abc-notes.data.tech.gov.sg/notes/topic-8-beefing-up-and-deploy-the-app/2.-password-protect-the-streamlit-app.html
 def check_password():
     # Returns 'True' if user has the correct password
