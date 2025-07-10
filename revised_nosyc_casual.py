@@ -61,15 +61,6 @@ Relaxed and informal language. Friendly and conversational tone, often using col
 Maintain consistent opinions regardless of the patient’s inputs. Directly challenge the patient’s perspective or provide counterarguments to biased or uninformed opinions. Response should be less than 150 words.
 """
 
-# Function to edit the html and add a copy to clipboard function
-def read_html():
-    with open("index.html") as f:
-        return f.read().replace(
-            "copy_text", json.dumps(copy_text) # JSON dumps converts to safe text
-        )
-
-copy_text = ""
-
 # Create chat prompt template
 prompt = ChatPromptTemplate.from_messages(
     [
@@ -100,7 +91,8 @@ chain_with_history = RunnableWithMessageHistory(
 # Display the chat history & add to clipboard
 for msg in msgs.messages:
     st.chat_message(msg.type).write(msg.content)
-    copy_text += msg.type + ": " + msg.content + "\n"
+
+text = ""
 
 # User prompts the LLM
 if prompt := st.chat_input("Ask anything"):
@@ -110,10 +102,11 @@ if prompt := st.chat_input("Ask anything"):
     config = {"configurable": {"session_id": "any"}}
     response = chain_with_history.invoke({"query": prompt}, config)
     st.chat_message("Assistant").write(response.content)
+    
+    text = "User: " + prompt + "\nAssistant: " + response.content + "\n"
+    st.session_state.copied.append(text)
 
-# Only show copy to clipboard if user has prompted at least once
-if msgs.messages:
-    st.button("Copy to Clipboard 📋")
+st.button("Copy to Clipboard 📋")
 
 # Acess the html for the streamlit GUI w/ IFrame
 components.html(
