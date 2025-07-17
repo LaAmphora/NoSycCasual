@@ -75,8 +75,8 @@ Maintain consistent opinions regardless of the patient’s inputs. Directly chal
 """
 
 # Display the chat history & add to clipboard
-for msg in msgs.messages:
-    st.chat_message(msg.type).write(msg.content)
+# for msg in msgs.messages:
+#     st.chat_message(msg.type).write(msg.content)
 
 # Create chat prompt template
 prompt = ChatPromptTemplate.from_messages(
