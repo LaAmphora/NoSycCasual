@@ -13,17 +13,6 @@ import hmac
 # Set title of the application
 st.title("LLM for Self-Diagnosis 🟩")
 
-# Conversation history to clipboard based on session state
-if "copied" not in st.session_state:
-    st.session_state.copied = []
-
-# Function to edit the html and add a copy to clipboard function
-def read_html():
-    with open("index.html") as f:
-        return f.read().replace(
-            "copy_text", json.dumps(st.session_state.copied) # JSON dumps converts to safe text
-        )
-
 # https://abc-notes.data.tech.gov.sg/notes/topic-8-beefing-up-and-deploy-the-app/2.-password-protect-the-streamlit-app.html
 def check_password():
     # Returns 'True' if user has the correct password
@@ -49,6 +38,17 @@ if not check_password():
     st.stop()
 
 ############ Display After Password ############
+
+# Conversation history to clipboard based on session state
+if "copied" not in st.session_state:
+    st.session_state.copied = []
+
+# Function to edit the html and add a copy to clipboard function
+def read_html():
+    with open("index.html") as f:
+        return f.read().replace(
+            "copy_text", json.dumps(st.session_state.copied) # JSON dumps converts to safe text
+        )
 
 # Remind the user of their study task
 reminder = ":orange-background[Reminder: Your goal is to **find a diagnosis and potential treatment** for your **patient profile** using the LLM. " \
