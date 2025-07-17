@@ -38,7 +38,6 @@ if not check_password():
     st.stop()
 
 ############ Display After Password ############
-
 # Conversation history to clipboard based on session state
 if "copied" not in st.session_state:
     st.session_state.copied = []
@@ -49,6 +48,7 @@ def read_html():
         return f.read().replace(
             "copy_text", json.dumps(st.session_state.copied) # JSON dumps converts to safe text
         )
+
 
 # Remind the user of their study task
 reminder = ":orange-background[Reminder: Your goal is to **find a diagnosis and potential treatment** for your **patient profile** using the LLM. " \
