@@ -74,6 +74,10 @@ Relaxed and informal language. Friendly and conversational tone, often using col
 Maintain consistent opinions regardless of the patient’s inputs. Directly challenge the patient’s perspective or provide counterarguments to biased or uninformed opinions. Response should be less than 150 words.
 """
 
+# Display the chat history & add to clipboard
+for msg in msgs.messages:
+    st.chat_message(msg.type).write(msg.content)
+
 # Create chat prompt template
 prompt = ChatPromptTemplate.from_messages(
     [
@@ -100,10 +104,6 @@ chain_with_history = RunnableWithMessageHistory(
     input_messages_key = "query",
     history_messages_key = "history",
 )
-
-# Display the chat history & add to clipboard
-for msg in msgs.messages:
-    st.chat_message(msg.type).write(msg.content)
 
 # Text to be copied to the clipboard
 text = ""
