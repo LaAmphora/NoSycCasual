@@ -49,7 +49,6 @@ def read_html():
             "copy_text", json.dumps(st.session_state.copied) # JSON dumps converts to safe text
         )
 
-
 # Remind the user of their study task
 reminder = ":orange-background[Reminder: Your goal is to **find a diagnosis and potential treatment** for your **patient profile** using the LLM. " \
 "Ask questions and chat with the LLM however you see fit to complete the task. " \
@@ -133,13 +132,18 @@ if msgs.messages:
 
     with col1:
         # Button configured w/ html to copy to clipboard
-        st.button("Copy to Clipboard 📋")
+        if st.button("Copy to Clipboard 📋"):
+            st.session_state.trigger = True
     with col2:
         st.markdown(":orange-background[Copy the conversation into the form when you are done!]")
 
-# Acess the html for the streamlit GUI w/ IFrame
-components.html(
-    read_html(),
-    height = 0,
-    width = 0,
-)
+# Access the html for the streamlit GUI w/ IFrame
+if st.session_state.get("trigger"):
+    components.html(
+        read_html(),
+        height = 0,
+        width = 0,
+    )
+
+# Reset the trigger
+st.session_state.trigger = False
