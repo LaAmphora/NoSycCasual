@@ -13,17 +13,6 @@ import hmac
 # Set title of the application
 st.title("LLM for Self-Diagnosis 🟩")
 
-# Function to edit the html and add a copy to clipboard function
-def read_html():
-    with open("index.html") as f:
-        return f.read().replace(
-            "copy_text", json.dumps(st.session_state.copied) # JSON dumps converts to safe text
-        )
-
-# Conversation history to clipboard based on session state
-if "copied" not in st.session_state:
-    st.session_state.copied = []
-
 # https://abc-notes.data.tech.gov.sg/notes/topic-8-beefing-up-and-deploy-the-app/2.-password-protect-the-streamlit-app.html
 def check_password():
     # Returns 'True' if user has the correct password
@@ -49,6 +38,17 @@ if not check_password():
     st.stop()
 
 ############ Display After Password ############
+
+# Function to edit the html and add a copy to clipboard function
+def read_html():
+    with open("index.html") as f:
+        return f.read().replace(
+            "copy_text", json.dumps(st.session_state.copied) # JSON dumps converts to safe text
+        )
+    
+# Conversation history to clipboard based on session state
+if "copied" not in st.session_state:
+    st.session_state.copied = []
 
 # Remind the user of their study task
 reminder = ":orange-background[Reminder: Your goal is to **find a diagnosis and potential treatment** for your **patient profile** using the LLM. " \
@@ -105,17 +105,6 @@ chain_with_history = RunnableWithMessageHistory(
 for msg in msgs.messages:
     st.chat_message(msg.type).write(msg.content)
 
-if msgs.messages:
-    # Columns in order to align the button and the reminder
-    # 0.3, 0.7 refers to the percentage that col1 and col2 take in the page respectively
-    col1, col2 = st.columns([0.3, 0.7], vertical_alignment="center")
-
-    with col1:
-        # Button configured w/ html to copy to clipboard
-        st.button("Copy to Clipboard 📋")
-    with col2:
-        st.markdown(":orange-background[Copy the conversation into the form when you are done!]")
-
 # Text to be copied to the clipboard
 text = ""
 
@@ -136,6 +125,17 @@ if prompt := st.chat_input("Ask anything"):
     # Add the prompt and response to the session state
     text = "User: " + prompt + "\nAssistant: " + response.content + "\n"
     st.session_state.copied.append(text)
+
+if msgs.messages:
+    # Columns in order to align the button and the reminder
+    # 0.3, 0.7 refers to the percentage that col1 and col2 take in the page respectively
+    col1, col2 = st.columns([0.3, 0.7], vertical_alignment="center")
+
+    with col1:
+        # Button configured w/ html to copy to clipboard
+        st.button("Copy to Clipboard 📋")
+    with col2:
+        st.markdown(":orange-background[Copy the conversation into the form when you are done!]")
 
 # Acess the html for the streamlit GUI w/ IFrame
 components.html(
