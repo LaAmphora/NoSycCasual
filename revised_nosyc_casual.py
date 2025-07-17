@@ -101,6 +101,10 @@ chain_with_history = RunnableWithMessageHistory(
     history_messages_key = "history",
 )
 
+# Display the chat history & add to clipboard
+for msg in msgs.messages:
+    st.chat_message(msg.type).write(msg.content)
+
 if msgs.messages:
     # Columns in order to align the button and the reminder
     # 0.3, 0.7 refers to the percentage that col1 and col2 take in the page respectively
@@ -111,10 +115,6 @@ if msgs.messages:
         st.button("Copy to Clipboard 📋")
     with col2:
         st.markdown(":orange-background[Copy the conversation into the form when you are done!]")
-
-# Display the chat history & add to clipboard
-for msg in msgs.messages:
-    st.chat_message(msg.type).write(msg.content)
 
 # Text to be copied to the clipboard
 text = ""
