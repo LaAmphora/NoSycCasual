@@ -137,13 +137,21 @@ if msgs.messages:
     with col2:
         st.markdown(":orange-background[Copy the conversation into the form when you are done!]")
 
-# Access the html for the streamlit GUI w/ IFrame
-if st.session_state.get("trigger"):
-    components.html(
-        read_html(),
-        height = 0,
-        width = 0,
-    )
+# # Access the html for the streamlit GUI w/ IFrame
+# if st.session_state.get("trigger"):
+#     components.html(
+#         read_html(),
+#         height = 0,
+#         width = 0,
+#     )
 
-# Reset the trigger
-st.session_state.trigger = False
+# # Reset the trigger
+# st.session_state.trigger = False
+
+if st.session_state.get("trigger", False):
+    components.html(f"""
+        <script>
+            navigator.clipboard.writeText({json.dumpts(text)});
+        <script>
+        """, height=0)
+    st.session_state.trigger = False
