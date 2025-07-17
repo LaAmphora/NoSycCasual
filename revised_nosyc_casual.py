@@ -151,7 +151,7 @@ if msgs.messages:
 if st.session_state.get("trigger", False):
     components.html(f"""
         <script>
-            navigator.clipboard.writeText({json.dumpts(text)});
+            navigator.clipboard.writeText({json.dumps(text)});
         <script>
         """, height=0)
     st.session_state.trigger = False
