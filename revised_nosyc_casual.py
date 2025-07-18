@@ -75,8 +75,6 @@ if msgs.messages:
     for msg in msgs.messages:
         st.chat_message(msg.type).write(msg.content)
 
-copy_to_clipboard(st.session_state.copied)
-
 # # Copy button
 # if st.button("Copy to Clipboard 📋"):
 #     copy_to_clipboard("\n".join(st.session_state.copied))
@@ -139,6 +137,7 @@ if prompt := st.chat_input("Ask anything"):
     # Add the prompt and response to the session state
     text = "User: " + prompt + "\nAssistant: " + response.content + "\n"
     st.session_state.copied.append(text)
+    copy_to_clipboard(st.session_state.copied)
 
 # if st.session_state.copied: , vertical_alignment="center"
 
