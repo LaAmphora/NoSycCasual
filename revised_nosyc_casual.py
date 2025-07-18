@@ -2,7 +2,6 @@ from langchain_community.chat_message_histories import StreamlitChatMessageHisto
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_community import chat_models
-from st_copy import copy_button
 from st_clipboard import copy_to_clipboard
 
 from openai import OpenAI
@@ -36,30 +35,22 @@ def check_password():
         st.error("😕 Password Incorrect")
     return False
 
+# Check password and if incorrect do not begin the application
 if not check_password():
     st.stop()
 
 ############ Display After Password ############
+
 # Conversation history to clipboard based on session state
 if "copied" not in st.session_state:
     st.session_state.copied = []
-
-# if "recent_copy" not in st.session_state:
-#     st.session_state.just_copied = False
-
-# # Function to edit the html and add a copy to clipboard function
-# def read_html():
-#     with open("index.html") as f:
-#         return f.read().replace(
-#             "copy_text", json.dumps(st.session_state.copied) # JSON dumps converts to safe text
-#         )
 
 # Remind the user of their study task
 reminder = ":orange-background[Reminder: Your goal is to **find a diagnosis and potential treatment** for your **patient profile** using the LLM. " \
 "Ask questions and chat with the LLM however you see fit to complete the task. " \
 "Feel free to respond to the LLM with any clarifying questions. Do not add any details to the patient profile that are not provided.]"
 
-# Display reminder to the user
+# Display reminder to the user about study task
 st.markdown (reminder)
 
 # Display a message about the copy feature
@@ -71,15 +62,9 @@ openai_api_key = api_key=st.secrets["OPENAI_API_KEY"]
 # Set up message memory
 msgs = StreamlitChatMessageHistory(key="langchain_messages")
 
-# Display the chat history & add to clipboard
-if msgs.messages:
-    for msg in msgs.messages:
-        st.chat_message(msg.type).write(msg.content)
-
-# # Copy button
-# if st.button("Copy to Clipboard 📋"):
-#     copy_to_clipboard("\n".join(st.session_state.copied))
-#     st.session_state.recent_copy = True
+# Display the chat history
+for msg in msgs.messages:
+    st.chat_message(msg.type).write(msg.content)
 
 # System prompt
 sys_prompt = """
@@ -139,74 +124,5 @@ if prompt := st.chat_input("Ask anything"):
     text = "User: " + prompt + "\nAssistant: " + response.content + "\n"
     st.session_state.copied.append(text)
 
+# Auto-copies conversation to user clipboard
 copy_to_clipboard(st.session_state.copied)
-
-# What the hell
-
-# if msgs.messages:
-#     # Columns in order to align the button and the reminder
-#     # 0.3, 0.7 refers to the percentage that col1 and col2 take in the page respectively
-#     col1, col2, col3 = st.columns([0.3, 0.65, 0.05], vertical_alignment="center")
-
-#     with col1:
-#         # Button configured w/ html to copy to clipboard
-#         clicked = st.button("Copy to Clipboard 📋")
-#             # copy_to_clipboard(st.session_state.copied)
-#     with col2:
-#         st.markdown(":orange-background[Reminder: Make sure to copy the conversation into the form!]")
-#     with col3:
-        
-
-    # # Render the clipboard component in a placeholder so layout doesn’t shift
-    # copy_placeholder = st.empty()
-
-    # if clicked:
-    #     with copy_placeholder:
-            
-    # else:
-    #     # Reserve space even when not used (optional)
-    #     with copy_placeholder:
-    #         st.markdown("")  # invisible element to hold space 
-
-
-
-# if st.session_state.copied: , vertical_alignment="center"
-
-# if st.session_state.copied:
-#     # Columns in order to align the button and the reminder
-#     # 0.3, 0.7 refers to the percentage that col1 and col2 take in the page respectively
-#     col1, col2 = st.columns([0.65, 0.35])
-#     with col1:
-#         st.markdown(":orange-background[Copy the conversation by clicking the icon to the right!]")
-        
-#         # Button configured w/ html to copy to clipboard
-#         # copy_button()
-#         # st.button("Copy to Clipboard 📋")
-#             # copy_to_clipboard("\n".join(st.session_state.copied))
-#     with col2:
-#         copy_button(
-#         st.session_state.copied,
-#         tooltip = "Copy your conversation",
-#         copied_label = "Copied!",
-#         icon = "st"
-#         )
-
-
-# Access the html for the streamlit GUI w/ IFrame
-
-# components.html(
-#     read_html(),
-#     height = 0,
-#     width = 0,
-# )
-
-# # Reset the trigger
-# st.session_state.trigger = False
-
-# if st.session_state.get("trigger", False):
-#     components.html(f"""
-#         <script>
-#             navigator.clipboard.writeText({json.dumps(text)});
-#         <script>
-#         """, height=0)
-#     st.session_state.trigger = False
