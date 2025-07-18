@@ -137,7 +137,6 @@ if prompt := st.chat_input("Ask anything"):
     # Add the prompt and response to the session state
     text = "User: " + prompt + "\nAssistant: " + response.content + "\n"
     st.session_state.copied.append(text)
-    copy_to_clipboard(st.session_state.copied)
 
 if msgs.messages:
     # Columns in order to align the button and the reminder
@@ -149,6 +148,8 @@ if msgs.messages:
         st.button("Copy to Clipboard 📋")
     with col2:
         st.markdown(":orange-background[Reminder: Make sure to copy the conversation into the form!]")
+
+copy_to_clipboard(st.session_state.copied)
 
 # if st.session_state.copied: , vertical_alignment="center"
 
