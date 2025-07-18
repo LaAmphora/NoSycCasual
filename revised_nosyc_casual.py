@@ -145,10 +145,21 @@ if msgs.messages:
 
     with col1:
         # Button configured w/ html to copy to clipboard
-        if st.button("Copy to Clipboard 📋"):
-            copy_to_clipboard(st.session_state.copied)
+        clicked = st.button("Copy to Clipboard 📋")
+            # copy_to_clipboard(st.session_state.copied)
     with col2:
         st.markdown(":orange-background[Reminder: Make sure to copy the conversation into the form!]")
+
+    # Render the clipboard component in a placeholder so layout doesn’t shift
+    copy_placeholder = st.empty()
+
+    if clicked:
+        with copy_placeholder:
+            copy_to_clipboard(st.session_state.copied)
+    else:
+        # Reserve space even when not used (optional)
+        with copy_placeholder:
+            st.markdown("")  # invisible element to hold space
 
 
 
