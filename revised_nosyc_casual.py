@@ -137,10 +137,10 @@ if prompt := st.chat_input("Ask anything"):
 if st.session_state.copied:
     # Columns in order to align the button and the reminder
     # 0.3, 0.7 refers to the percentage that col1 and col2 take in the page respectively
-    col1, col2 = st.columns([0.1, 0.1, 0.9], vertical_alignment="center")
+    col1, col2, col3 = st.columns([0.1, 0.1, 0.9], vertical_alignment="center")
     with col1:
         st.markdown("")
-    with col1:
+    with col2:
         copy_button(
         st.session_state.copied,
         tooltip = "Copy your conversation",
@@ -151,7 +151,7 @@ if st.session_state.copied:
         # copy_button()
         # st.button("Copy to Clipboard 📋")
             # copy_to_clipboard("\n".join(st.session_state.copied))
-    with col2:
+    with col3:
         st.markdown(":orange-background[Copy the conversation with the button to the left when you are done!]")
 
 
