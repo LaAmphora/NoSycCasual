@@ -139,6 +139,17 @@ if prompt := st.chat_input("Ask anything"):
     st.session_state.copied.append(text)
     copy_to_clipboard(st.session_state.copied)
 
+if msgs.messages:
+    # Columns in order to align the button and the reminder
+    # 0.3, 0.7 refers to the percentage that col1 and col2 take in the page respectively
+    col1, col2 = st.columns([0.3, 0.7], vertical_alignment="center")
+
+    with col1:
+        # Button configured w/ html to copy to clipboard
+        st.button("Copy to Clipboard 📋")
+    with col2:
+        st.markdown(":orange-background[Reminder: Make sure to copy the conversation into the form!]")
+
 # if st.session_state.copied: , vertical_alignment="center"
 
 # if st.session_state.copied:
