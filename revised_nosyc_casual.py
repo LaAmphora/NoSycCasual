@@ -137,8 +137,7 @@ if prompt := st.chat_input("Ask anything"):
     st.session_state.copied.append(text)
 
 if msgs.messages:
-    st.markdown(":orange-background[When you are finished paste your conversation into the Qualtrics form. " \
-    "Your conversation is automatically copied to your computer. ]")
+    st.markdown(":orange-background[Your conversation is automatically copied to your computer. When you are finished paste your conversation into the Qualtrics form.]")
 
 copy_to_clipboard(st.session_state.copied)
 
