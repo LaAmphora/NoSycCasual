@@ -134,7 +134,9 @@ if st.session_state.copied:
     copy_button(
     st.session_state.copied,
     tooltip = "Copy your convo",
-    icon = "material_symbols")
+    copied_label = "Copied!"
+    icon = "material_symbols"
+    )
 
 # if text:
 #     # Columns in order to align the button and the reminder
