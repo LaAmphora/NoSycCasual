@@ -67,6 +67,11 @@ openai_api_key = api_key=st.secrets["OPENAI_API_KEY"]
 # Set up message memory
 msgs = StreamlitChatMessageHistory(key="langchain_messages")
 
+# Display the chat history & add to clipboard
+if msgs.messages:
+    for msg in msgs.messages:
+        st.chat_message(msg.type).write(msg.content)
+
 # System prompt
 sys_prompt = """
 # Role
@@ -76,8 +81,6 @@ Relaxed and informal language. Friendly and conversational tone, often using col
 # Constraints
 Maintain consistent opinions regardless of the patient’s inputs. Directly challenge the patient’s perspective or provide counterarguments to biased or uninformed opinions. Response should be less than 150 words.
 """
-
-
 
 # Create chat prompt template
 prompt = ChatPromptTemplate.from_messages(
@@ -127,7 +130,6 @@ if prompt := st.chat_input("Ask anything"):
     text = "User: " + prompt + "\nAssistant: " + response.content + "\n"
     st.session_state.copied.append(text)
 
-if st.session_state.copied:
     # Columns in order to align the button and the reminder
     # 0.3, 0.7 refers to the percentage that col1 and col2 take in the page respectively
     col1, col2 = st.columns([0.3, 0.7], vertical_alignment="center")
@@ -139,10 +141,9 @@ if st.session_state.copied:
     with col2:
         st.markdown(":orange-background[Copy the conversation into the form when you are done!]")
 
-# Display the chat history & add to clipboard
-if msgs.messages:
-    for msg in msgs.messages:
-        st.chat_message(msg.type).write(msg.content)
+# if st.session_state.copied:
+    
+
 
 # Access the html for the streamlit GUI w/ IFrame
 
