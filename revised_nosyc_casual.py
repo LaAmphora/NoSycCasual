@@ -137,7 +137,7 @@ if prompt := st.chat_input("Ask anything"):
 if st.session_state.copied:
     # Columns in order to align the button and the reminder
     # 0.3, 0.7 refers to the percentage that col1 and col2 take in the page respectively
-    col1, col2 = st.columns([0.85, 0.15], vertical_alignment="center")
+    col1, col2 = st.columns([0.8, 0.2], vertical_alignment="center")
     with col1:
         st.markdown(":orange-background[Copy the conversation with the button to the left when you are done!]")
         
