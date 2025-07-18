@@ -61,7 +61,7 @@ reminder = ":orange-background[Reminder: Your goal is to **find a diagnosis and 
 # Display reminder to the user
 st.markdown (reminder)
 
-st.markdown(":orange-background[Reminder: Copy the conversation into the form.]")
+st.markdown(":orange-background[Reminder: Copy the conversation into the Qualtrics form when you are done.]")
 
 # Set OpenAI API key from Streamlit secrets
 openai_api_key = api_key=st.secrets["OPENAI_API_KEY"]
