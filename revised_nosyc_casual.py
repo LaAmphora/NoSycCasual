@@ -130,6 +130,9 @@ if prompt := st.chat_input("Ask anything"):
     text = "User: " + prompt + "\nAssistant: " + response.content + "\n"
     st.session_state.copied.append(text)
 
+
+
+if text:
     # Columns in order to align the button and the reminder
     # 0.3, 0.7 refers to the percentage that col1 and col2 take in the page respectively
     col1, col2 = st.columns([0.3, 0.7], vertical_alignment="center")
@@ -140,9 +143,6 @@ if prompt := st.chat_input("Ask anything"):
             # copy_to_clipboard("\n".join(st.session_state.copied))
     with col2:
         st.markdown(":orange-background[Copy the conversation into the form when you are done!]")
-
-# if st.session_state.copied:
-    
 
 
 # Access the html for the streamlit GUI w/ IFrame
