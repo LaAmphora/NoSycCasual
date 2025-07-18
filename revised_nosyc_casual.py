@@ -140,6 +140,8 @@ if prompt := st.chat_input("Ask anything"):
 
 copy_to_clipboard(st.session_state.copied)
 
+# What the hell
+
 # if msgs.messages:
 #     # Columns in order to align the button and the reminder
 #     # 0.3, 0.7 refers to the percentage that col1 and col2 take in the page respectively
