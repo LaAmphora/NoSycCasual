@@ -138,19 +138,21 @@ if prompt := st.chat_input("Ask anything"):
     text = "User: " + prompt + "\nAssistant: " + response.content + "\n"
     st.session_state.copied.append(text)
 
-if msgs.messages:
-    # Columns in order to align the button and the reminder
-    # 0.3, 0.7 refers to the percentage that col1 and col2 take in the page respectively
-    col1, col2, col3 = st.columns([0.3, 0.65, 0.05], vertical_alignment="center")
+copy_to_clipboard(st.session_state.copied)
 
-    with col1:
-        # Button configured w/ html to copy to clipboard
-        clicked = st.button("Copy to Clipboard 📋")
-            # copy_to_clipboard(st.session_state.copied)
-    with col2:
-        st.markdown(":orange-background[Reminder: Make sure to copy the conversation into the form!]")
-    with col3:
-        copy_to_clipboard(st.session_state.copied)
+# if msgs.messages:
+#     # Columns in order to align the button and the reminder
+#     # 0.3, 0.7 refers to the percentage that col1 and col2 take in the page respectively
+#     col1, col2, col3 = st.columns([0.3, 0.65, 0.05], vertical_alignment="center")
+
+#     with col1:
+#         # Button configured w/ html to copy to clipboard
+#         clicked = st.button("Copy to Clipboard 📋")
+#             # copy_to_clipboard(st.session_state.copied)
+#     with col2:
+#         st.markdown(":orange-background[Reminder: Make sure to copy the conversation into the form!]")
+#     with col3:
+        
 
     # # Render the clipboard component in a placeholder so layout doesn’t shift
     # copy_placeholder = st.empty()
