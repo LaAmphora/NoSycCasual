@@ -77,28 +77,10 @@ Relaxed and informal language. Friendly and conversational tone, often using col
 Maintain consistent opinions regardless of the patient’s inputs. Directly challenge the patient’s perspective or provide counterarguments to biased or uninformed opinions. Response should be less than 150 words.
 """
 
-if msgs.messages:
-    if not st.session_state.recent_copy:
-        for msg in msgs.messages:
-            st.chat_message(msg.type).write(msg.content)
-   
-   # Columns in order to align the button and the reminder
-    # 0.3, 0.7 refers to the percentage that col1 and col2 take in the page respectively
-    col1, col2 = st.columns([0.3, 0.7], vertical_alignment="center")
-
-    with col1:
-        # Button configured w/ html to copy to clipboard
-        if st.button("Copy to Clipboard 📋"):
-            copy_to_clipboard("\n".join(st.session_state.copied))
-            st.session_state.recent_copy = True
-            # st.session_state.trigger = True
-    with col2:
-        st.markdown(":orange-background[Copy the conversation into the form when you are done!]")
-
-# # Display the chat history & add to clipboard
-# if msgs.messages and not st.session_state.copied:
-#     for msg in msgs.messages:
-#         st.chat_message(msg.type).write(msg.content)
+# Display the chat history & add to clipboard
+if msgs.messages and not st.session_state.copied:
+    for msg in msgs.messages:
+        st.chat_message(msg.type).write(msg.content)
 
 # Create chat prompt template
 prompt = ChatPromptTemplate.from_messages(
@@ -148,7 +130,20 @@ if prompt := st.chat_input("Ask anything"):
     text = "User: " + prompt + "\nAssistant: " + response.content + "\n"
     st.session_state.copied.append(text)
 
-st.session_state.recent_copy = False
+if msgs.messages:
+    # Columns in order to align the button and the reminder
+    # 0.3, 0.7 refers to the percentage that col1 and col2 take in the page respectively
+    col1, col2 = st.columns([0.3, 0.7], vertical_alignment="center")
+
+    with col1:
+        # Button configured w/ html to copy to clipboard
+        if st.button("Copy to Clipboard 📋"):
+            copy_to_clipboard("\n".join(st.session_state.copied))
+            st.session_state.recent_copy = True
+            # st.session_state.trigger = True
+    with col2:
+        st.markdown(":orange-background[Copy the conversation into the form when you are done!]")
+
 
 # # Access the html for the streamlit GUI w/ IFrame
 # if st.session_state.get("trigger"):
