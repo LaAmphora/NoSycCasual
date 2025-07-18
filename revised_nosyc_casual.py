@@ -130,7 +130,7 @@ if prompt := st.chat_input("Ask anything"):
     text = "User: " + prompt + "\nAssistant: " + response.content + "\n"
     st.session_state.copied.append(text)
 
-if msgs.messages:
+if st.session_state.copied:
     # Columns in order to align the button and the reminder
     # 0.3, 0.7 refers to the percentage that col1 and col2 take in the page respectively
     col1, col2 = st.columns([0.3, 0.7], vertical_alignment="center")
