@@ -3,6 +3,7 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_community import chat_models
 from st_copy import copy_button
+from st_clipboard import copy_to_clipboard
 
 from openai import OpenAI
 import streamlit as st
@@ -74,6 +75,13 @@ if msgs.messages:
     for msg in msgs.messages:
         st.chat_message(msg.type).write(msg.content)
 
+copy_to_clipboard(st.session_state.copied)
+
+# # Copy button
+# if st.button("Copy to Clipboard 📋"):
+#     copy_to_clipboard("\n".join(st.session_state.copied))
+#     st.session_state.recent_copy = True
+
 # System prompt
 sys_prompt = """
 # Role
@@ -133,26 +141,25 @@ if prompt := st.chat_input("Ask anything"):
     st.session_state.copied.append(text)
 
 # if st.session_state.copied: , vertical_alignment="center"
-    
 
-if st.session_state.copied:
-    # Columns in order to align the button and the reminder
-    # 0.3, 0.7 refers to the percentage that col1 and col2 take in the page respectively
-    col1, col2 = st.columns([0.65, 0.35])
-    with col1:
-        st.markdown(":orange-background[Copy the conversation by clicking the icon to the right!]")
+# if st.session_state.copied:
+#     # Columns in order to align the button and the reminder
+#     # 0.3, 0.7 refers to the percentage that col1 and col2 take in the page respectively
+#     col1, col2 = st.columns([0.65, 0.35])
+#     with col1:
+#         st.markdown(":orange-background[Copy the conversation by clicking the icon to the right!]")
         
-        # Button configured w/ html to copy to clipboard
-        # copy_button()
-        # st.button("Copy to Clipboard 📋")
-            # copy_to_clipboard("\n".join(st.session_state.copied))
-    with col2:
-        copy_button(
-        st.session_state.copied,
-        tooltip = "Copy your conversation",
-        copied_label = "Copied!",
-        icon = "st"
-        )
+#         # Button configured w/ html to copy to clipboard
+#         # copy_button()
+#         # st.button("Copy to Clipboard 📋")
+#             # copy_to_clipboard("\n".join(st.session_state.copied))
+#     with col2:
+#         copy_button(
+#         st.session_state.copied,
+#         tooltip = "Copy your conversation",
+#         copied_label = "Copied!",
+#         icon = "st"
+#         )
 
 
 # Access the html for the streamlit GUI w/ IFrame
