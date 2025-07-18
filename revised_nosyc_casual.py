@@ -43,8 +43,8 @@ if not check_password():
 if "copied" not in st.session_state:
     st.session_state.copied = []
 
-if "recent_copy" not in st.session_state:
-    st.session_state.just_copied = False
+# if "recent_copy" not in st.session_state:
+#     st.session_state.just_copied = False
 
 # # Function to edit the html and add a copy to clipboard function
 # def read_html():
@@ -78,7 +78,7 @@ Maintain consistent opinions regardless of the patient’s inputs. Directly chal
 """
 
 # Display the chat history & add to clipboard
-if msgs.messages and not st.session_state.copied:
+if msgs.messages:
     for msg in msgs.messages:
         st.chat_message(msg.type).write(msg.content)
 
@@ -139,8 +139,6 @@ if msgs.messages:
         # Button configured w/ html to copy to clipboard
         if st.button("Copy to Clipboard 📋"):
             copy_to_clipboard("\n".join(st.session_state.copied))
-            # st.session_state.recent_copy = True
-            # st.session_state.trigger = True
     with col2:
         st.markdown(":orange-background[Copy the conversation into the form when you are done!]")
 
