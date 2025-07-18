@@ -139,7 +139,7 @@ if st.session_state.copied:
 
     # Columns in order to align the button and the reminder
     # 0.3, 0.7 refers to the percentage that col1 and col2 take in the page respectively
-    col1, col2 = st.columns([0.68, 0.32])
+    col1, col2 = st.columns([0.65, 0.35])
     with col1:
         st.markdown(":orange-background[Copy the conversation by clicking the icon to the right!]")
         
