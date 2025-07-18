@@ -43,12 +43,6 @@ if not check_password():
 if "copied" not in st.session_state:
     st.session_state.copied = []
 
-copy_button(
-    st.session_state.copied,
-    tooltip = "Copy your convo",
-    icon = "material_symbols"
-)
-
 # if "recent_copy" not in st.session_state:
 #     st.session_state.just_copied = False
 
@@ -77,6 +71,12 @@ msgs = StreamlitChatMessageHistory(key="langchain_messages")
 if msgs.messages:
     for msg in msgs.messages:
         st.chat_message(msg.type).write(msg.content)
+    
+    copy_button(
+    st.session_state.copied,
+    tooltip = "Copy your convo",
+    icon = "material_symbols"
+)
 
 # System prompt
 sys_prompt = """
@@ -145,7 +145,7 @@ if text:
 
     with col1:
         # Button configured w/ html to copy to clipboard
-        copy_button()
+        # copy_button()
         # st.button("Copy to Clipboard 📋")
             # copy_to_clipboard("\n".join(st.session_state.copied))
     with col2:
