@@ -62,6 +62,9 @@ reminder = ":orange-background[Reminder: Your goal is to **find a diagnosis and 
 # Display reminder to the user
 st.markdown (reminder)
 
+# Display a message about the copy feature
+st.markdown(":orange-background[Your conversation is automatically copied to your computer. When you are finished paste your conversation into the Qualtrics form.]")
+
 # Set OpenAI API key from Streamlit secrets
 openai_api_key = api_key=st.secrets["OPENAI_API_KEY"]
 
@@ -135,9 +138,6 @@ if prompt := st.chat_input("Ask anything"):
     # Add the prompt and response to the session state
     text = "User: " + prompt + "\nAssistant: " + response.content + "\n"
     st.session_state.copied.append(text)
-
-if msgs.messages:
-    st.markdown(":orange-background[Your conversation is automatically copied to your computer. When you are finished paste your conversation into the Qualtrics form.]")
 
 copy_to_clipboard(st.session_state.copied)
 
