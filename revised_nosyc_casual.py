@@ -140,10 +140,11 @@ if msgs.messages:
         if st.button("Copy to Clipboard 📋"):
             copy_to_clipboard("\n".join(st.session_state.copied))
             st.session_state.recent_copy = True
-            st.rerun()
             # st.session_state.trigger = True
     with col2:
         st.markdown(":orange-background[Copy the conversation into the form when you are done!]")
+
+st.session_state.recent_copy = False
 
 # # Access the html for the streamlit GUI w/ IFrame
 # if st.session_state.get("trigger"):
