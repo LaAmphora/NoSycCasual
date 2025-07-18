@@ -135,6 +135,8 @@ if prompt := st.chat_input("Ask anything"):
     # Add the prompt and response to the session state
     text = "User: " + prompt + "\nAssistant: " + response.content + "\n"
     st.session_state.copied.append(text)
+
+if msgs.messages:
     st.markdown(":orange-background[When you are finished paste your conversation into the Qualtrics form. " \
     "Your conversation is automatically copied to your computer. ]")
 
