@@ -149,7 +149,7 @@ if msgs.messages:
     with col2:
         st.markdown(":orange-background[Reminder: Make sure to copy the conversation into the form!]")
 
-copy_to_clipboard(st.session_state.copied, "Copy to Clipboard 📋")
+copy_to_clipboard(st.session_state.copied, label = "Copy to Clipboard 📋")
 
 # if st.session_state.copied: , vertical_alignment="center"
 
