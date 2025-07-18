@@ -150,7 +150,7 @@ if st.session_state.copied:
         # st.button("Copy to Clipboard 📋")
             # copy_to_clipboard("\n".join(st.session_state.copied))
     with col2:
-        st.markdown(":orange-background[To the left is a copy button. Copy the conversation into the form when you are done!]")
+        st.markdown(":orange-background[Copy the conversation with the button to the left into the form when you are done!]")
 
 
 # Access the html for the streamlit GUI w/ IFrame
