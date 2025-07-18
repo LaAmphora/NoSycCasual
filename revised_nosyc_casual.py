@@ -130,26 +130,27 @@ if prompt := st.chat_input("Ask anything"):
     text = "User: " + prompt + "\nAssistant: " + response.content + "\n"
     st.session_state.copied.append(text)
 
+# if st.session_state.copied:
+    
+
 if st.session_state.copied:
-    copy_button(
-    st.session_state.copied,
-    tooltip = "Copy your convo",
-    copied_label = "Copied!",
-    icon = "st"
-    )
+    # Columns in order to align the button and the reminder
+    # 0.3, 0.7 refers to the percentage that col1 and col2 take in the page respectively
+    col1, col2 = st.columns([0.2, 0.8], vertical_alignment="center")
 
-# if text:
-#     # Columns in order to align the button and the reminder
-#     # 0.3, 0.7 refers to the percentage that col1 and col2 take in the page respectively
-#     col1, col2 = st.columns([0.3, 0.7], vertical_alignment="center")
-
-#     with col1:
-#         # Button configured w/ html to copy to clipboard
-#         # copy_button()
-#         # st.button("Copy to Clipboard 📋")
-#             # copy_to_clipboard("\n".join(st.session_state.copied))
-#     with col2:
-#         st.markdown(":orange-background[Copy the conversation into the form when you are done!]")
+    with col1:
+        copy_button(
+        st.session_state.copied,
+        tooltip = "Copy your conversation",
+        copied_label = "Copied!",
+        icon = "st"
+        )
+        # Button configured w/ html to copy to clipboard
+        # copy_button()
+        # st.button("Copy to Clipboard 📋")
+            # copy_to_clipboard("\n".join(st.session_state.copied))
+    with col2:
+        st.markdown(":orange-background[To the left is a copy button. Copy the conversation into the form when you are done!]")
 
 
 # Access the html for the streamlit GUI w/ IFrame
