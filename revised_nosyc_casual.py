@@ -134,8 +134,8 @@ if st.session_state.copied:
     copy_button(
     st.session_state.copied,
     tooltip = "Copy your convo",
-    copied_label = "Copied!"
-    icon = "material_symbols"
+    copied_label = "Copied!",
+    icon = "st"
     )
 
 # if text:
