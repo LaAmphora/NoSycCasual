@@ -56,7 +56,8 @@ if "copied" not in st.session_state:
 # Remind the user of their study task
 reminder = ":orange-background[Reminder: Your goal is to **find a diagnosis and potential treatment** for your **patient profile** using the LLM. " \
 "Ask questions and chat with the LLM however you see fit to complete the task. " \
-"Feel free to respond to the LLM with any clarifying questions. Do not add any details to the patient profile that are not provided.]"
+"Feel free to respond to the LLM with any clarifying questions. Do not add any details to the patient profile that are not provided." \
+"Remember to copy the conversation and paste it into the form.]"
 
 # Display reminder to the user
 st.markdown (reminder)
@@ -150,7 +151,7 @@ if st.session_state.copied:
         # st.button("Copy to Clipboard 📋")
             # copy_to_clipboard("\n".join(st.session_state.copied))
     with col2:
-        st.markdown(":orange-background[Copy the conversation with the button to the left into the form when you are done!]")
+        st.markdown(":orange-background[Copy the conversation with the button to the left when you are done!]")
 
 
 # Access the html for the streamlit GUI w/ IFrame
