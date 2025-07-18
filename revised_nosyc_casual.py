@@ -45,7 +45,7 @@ if "copied" not in st.session_state:
 
 copy_button(
     st.session_state.copied,
-    tootip = "Copy your convo",
+    tooltip = "Copy your convo",
     icon = "material_symbols"
 )
 
