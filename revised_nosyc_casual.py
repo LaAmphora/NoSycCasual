@@ -139,7 +139,7 @@ if msgs.messages:
         # Button configured w/ html to copy to clipboard
         if st.button("Copy to Clipboard 📋"):
             copy_to_clipboard("\n".join(st.session_state.copied))
-            st.session_state.recent_copy = True
+            # st.session_state.recent_copy = True
             # st.session_state.trigger = True
     with col2:
         st.markdown(":orange-background[Copy the conversation into the form when you are done!]")
