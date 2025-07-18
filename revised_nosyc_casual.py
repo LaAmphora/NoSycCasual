@@ -71,12 +71,6 @@ msgs = StreamlitChatMessageHistory(key="langchain_messages")
 if msgs.messages:
     for msg in msgs.messages:
         st.chat_message(msg.type).write(msg.content)
-    
-    copy_button(
-    st.session_state.copied,
-    tooltip = "Copy your convo",
-    icon = "material_symbols"
-)
 
 # System prompt
 sys_prompt = """
@@ -136,7 +130,11 @@ if prompt := st.chat_input("Ask anything"):
     text = "User: " + prompt + "\nAssistant: " + response.content + "\n"
     st.session_state.copied.append(text)
 
-
+if st.session_state.copied:
+    copy_button(
+    st.session_state.copied,
+    tooltip = "Copy your convo",
+    icon = "material_symbols")
 
 # if text:
 #     # Columns in order to align the button and the reminder
