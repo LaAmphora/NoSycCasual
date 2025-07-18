@@ -61,6 +61,8 @@ reminder = ":orange-background[Reminder: Your goal is to **find a diagnosis and 
 # Display reminder to the user
 st.markdown (reminder)
 
+st.markdown(":orange-background[Reminder: Copy the conversation into the form.]")
+
 # Set OpenAI API key from Streamlit secrets
 openai_api_key = api_key=st.secrets["OPENAI_API_KEY"]
 
@@ -134,9 +136,6 @@ if prompt := st.chat_input("Ask anything"):
     
 
 if st.session_state.copied:
-    
-    st.markdown(":orange-background[Reminder: Copy the conversation into the form.]")
-
     # Columns in order to align the button and the reminder
     # 0.3, 0.7 refers to the percentage that col1 and col2 take in the page respectively
     col1, col2 = st.columns([0.65, 0.35])
