@@ -46,12 +46,12 @@ if "copied" not in st.session_state:
 # if "recent_copy" not in st.session_state:
 #     st.session_state.just_copied = False
 
-# # Function to edit the html and add a copy to clipboard function
-# def read_html():
-#     with open("index.html") as f:
-#         return f.read().replace(
-#             "copy_text", json.dumps(st.session_state.copied) # JSON dumps converts to safe text
-#         )
+# Function to edit the html and add a copy to clipboard function
+def read_html():
+    with open("index.html") as f:
+        return f.read().replace(
+            "copy_text", json.dumps(st.session_state.copied) # JSON dumps converts to safe text
+        )
 
 # Remind the user of their study task
 reminder = ":orange-background[Reminder: Your goal is to **find a diagnosis and potential treatment** for your **patient profile** using the LLM. " \
@@ -134,8 +134,8 @@ if st.session_state.copied:
 
     with col1:
         # Button configured w/ html to copy to clipboard
-        if st.button("Copy to Clipboard 📋"):
-            copy_to_clipboard("\n".join(st.session_state.copied))
+        st.button("Copy to Clipboard 📋")
+            # copy_to_clipboard("\n".join(st.session_state.copied))
     with col2:
         st.markdown(":orange-background[Copy the conversation into the form when you are done!]")
 
@@ -144,13 +144,13 @@ if msgs.messages:
     for msg in msgs.messages:
         st.chat_message(msg.type).write(msg.content)
 
-# # Access the html for the streamlit GUI w/ IFrame
-# if st.session_state.get("trigger"):
-#     components.html(
-#         read_html(),
-#         height = 0,
-#         width = 0,
-#     )
+# Access the html for the streamlit GUI w/ IFrame
+
+components.html(
+    read_html(),
+    height = 0,
+    width = 0,
+)
 
 # # Reset the trigger
 # st.session_state.trigger = False
