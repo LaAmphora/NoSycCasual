@@ -2,7 +2,7 @@ from langchain_community.chat_message_histories import StreamlitChatMessageHisto
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_community import chat_models
-from st_clipboard import copy_to_clipboard
+from st_copy import copy_button
 
 from openai import OpenAI
 import streamlit as st
@@ -124,5 +124,16 @@ if prompt := st.chat_input("Ask anything"):
     text = "User: " + prompt + "\nAssistant: " + response.content + "\n"
     st.session_state.copied.append(text)
 
-# Auto-copies conversation to user clipboard
-copy_to_clipboard(st.session_state.copied)
+if st.session_state.copied:
+    col1, col2 = st.columns([0.68, 0.32])
+    
+    with col1:
+        st.markdown(":orange-background[Copy the conversation with the button when you are done.]")
+
+    with col2:
+        copy_button(
+            st.session_state.copied,
+            tooltip = "Copy your conversation",
+            copied_label = "Copied!",
+            icon = "st",
+        )
