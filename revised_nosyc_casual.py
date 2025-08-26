@@ -120,8 +120,11 @@ if prompt := st.chat_input("Ask anything"):
     
     st.chat_message("Assistant").write(response.content)
 
-    if "greenLLMstop" in text:
-        text = text.replace("greenLLMstop", "")
+    if "greenLLMstop" in st.session_state.copied:
+        st.session_state.copied = st.session_state.copied.replace("greenLLMstop", "")
+
+    if "greenLLMstart" not in st.session_state.copied:
+        st.session_state.copied.append("greenLLMstart")
     
     # Add the prompt and response to the session state
     text = "User: " + prompt + "\nAssistant: " + response.content + "greenLLMstop" + "\n"
