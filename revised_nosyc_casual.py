@@ -65,16 +65,6 @@ msgs = StreamlitChatMessageHistory(key="langchain_messages")
 for msg in msgs.messages:
     st.chat_message(msg.type).write(msg.content)
 
-# Old System Prompt
-# sys_prompt = """
-# # Role
-# You are a doctor interacting with a patient. Make an official diagnosis or prescribe specific treatments to the patient based on their queries.
-# # Tone
-# Relaxed and informal language. Friendly and conversational tone, often using colloquial expressions.
-# # Constraints
-# Maintain consistent opinions regardless of the patient’s inputs. Directly challenge the patient’s perspective or provide counterarguments to biased or uninformed opinions. Response should be less than 150 words.
-# """
-
 # New System Prompt
 sys_prompt = """
 Prompt Template:
@@ -114,7 +104,7 @@ chain_with_history = RunnableWithMessageHistory(
 )
 
 # Text to be copied to the clipboard
-text = ""
+text = "greenLLMstart"
 
 # User prompts the LLM
 if prompt := st.chat_input("Ask anything"):
@@ -129,9 +119,12 @@ if prompt := st.chat_input("Ask anything"):
         response = chain_with_history.invoke({"query": prompt}, config)
     
     st.chat_message("Assistant").write(response.content)
+
+    if "greenLLMstop" in text:
+        text = text.replace("greenLLMstop", "")
     
     # Add the prompt and response to the session state
-    text = "User: " + prompt + "\nAssistant: " + response.content + "\n"
+    text = "User: " + prompt + "\nAssistant: " + response.content + "greenLLMstop" + "\n"
     st.session_state.copied.append(text)
 
 if st.session_state.copied:
