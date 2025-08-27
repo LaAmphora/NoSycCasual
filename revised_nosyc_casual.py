@@ -9,6 +9,7 @@ import streamlit as st
 import json
 import streamlit.components.v1 as components
 import hmac
+import re
 
 ### GREEN LLM ###
 
@@ -120,14 +121,11 @@ if prompt := st.chat_input("Ask anything"):
     
     st.chat_message("Assistant").write(response.content)
 
-    if "greenLLMstop" in st.session_state.copied:
-        st.session_state.copied = st.session_state.copied.replace("greenLLMstop", "")
-
     if "greenLLMstart" not in st.session_state.copied:
         st.session_state.copied.append("greenLLMstart")
     
     # Add the prompt and response to the session state
-    text = "User: " + prompt + "\nAssistant: " + response.content + "greenLLMstop" + "\n"
+    text = "User: " + prompt + "\nAssistant: " + response.content + "\n"
     st.session_state.copied.append(text)
 
 if st.session_state.copied:
@@ -137,6 +135,18 @@ if st.session_state.copied:
         st.markdown(":orange-background[Copy the conversation with the button when you are done.]")
 
     with col2:
+
+        # Join if it's a list of messages
+        if isinstance(st.session_state.copied, list):
+            text_to_copy = "".join(st.session_state.copied)
+        else:
+            text_to_copy = st.session_state.copied
+
+        # Force exactly one stop marker at the very end - code from ChatGPT
+        text_to_copy = text_to_copy.rstrip()          # trim extra spaces/newlines
+        text_to_copy = re.sub(r"(redLLMstop)+$", "", text_to_copy)  # remove trailing duplicates
+        text_to_copy += "greenLLMstop"                  # add one clean stop
+
         copy_button(
             st.session_state.copied,
             tooltip = "Copy your conversation",
